@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet" type="text/css" href="projection.css" />
+<title>Deploying a Canoo RIA Suite to Google App Engine</title>
+</head>
+
+<body>
+
+<div id="main-title">
+	<h1>Canoo RIA Suite and Google App Engine</h1>
+</div>
+
+<div class="screen">
+This page can also be viewed in projection, or presentation, mode.
+<table border="1">
+<tr>
+<th>Browser</th>
+<th>Shortcut</th>
+<th>From version</th>
+</tr>
+<tr>
+<td>Opera</td>
+<td><kbd>F11</kbd></td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Chrome</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Internet Explorer</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Netscape</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+</table>
+</div>
+
+<div class="slide">
+<h2 class="screen">Introduction</h2>
+<div class="intro">
+The new Canoo RIA Suite supports deployment to Google App Engine
+(GAE) out of the box. On this years first CodeCamp we wanted to try this
+new feature out. Where "we" being some Canooies with still limited to
+no ULC experience.
+</div>
+
+<div class="screen">
+<p>For this setup, we used build 5989 of the Canoo RIA Suite and
+eclipse 3.5 Galileo with the <a
+	href="http://code.google.com/appengine/docs/java/tools/eclipse.html">GAE
+plugin</a>.</p>
+<p>Following the general guidelines of chapter 2 in the <a
+	href="http://www.canoo.com/ulc/developerzone/ULCApplicationDevelopmentGuide.pdf">UltraLightClient
+Application Development Guide</a>, we set up our eclipse workspace (steps 1
+- 4) and then deployed our application to GAE:</p>
+</div>
+</div>
+
+<div class="slide">
+<h2 class="projection">Setting up Canoo RIA Suite</h2>
+<ol>
+	<li>First we added the external tools ant runner: <pre><code>Run -> External Tools -> External Tools Configurations...</code></pre>
+	setting the path to <code>${CANOO_RIA_SUITE_HOME}/addon/generators/build-setup.xml</code>
+	</li>
+	<li>We created the project with the above created runner.</li>
+	<li>Then we imported the server and client projects into our
+		eclipse workspace: <pre><code>File -> Import... -> Existing Projects into Workspace -> etc.</code></pre>
+		<div class="screen">If nothing else is stated, <i>project</i> in the
+		following text, means server project.</div>
+	</li>
+	<li class="screen">We edited the created files to our likings, and then tested
+	the application locally: <pre><code>Run -> Run History -> ${project-name}</code></pre>
+	</li>
+
+</ol>
+</div>
+
+<div class="slide">
+<h2>Enabling Google App Engine support</h2>
+
+To be able to deploy to Google Apps Engine, the file <code>appengine-web.xml</code>
+needs to be created in the <code>WebContent/WEB-INF</code> directory of
+the project: 
+<pre class="projection code-file">
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+
+  <application>application-id</application>
+  <version>1</version>
+  <sessions-enabled>true</sessions-enabled>
+
+</appengine-web-app>
+]]>
+</pre>
+<pre class="screen">
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+
+<appengine-web-app xmlns="http://appengine.google.com/ns/1.0">
+	<application>google-app-engine-application-id</application>
+	<version>1</version>
+	
+<!-- Configure java.util.logging
+	<system-properties>
+		<property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
+	</system-properties>
+ -->
+	<sessions-enabled>true</sessions-enabled>
+	
+</appengine-web-app>
+]]>
+</pre>
+
+<div class="screen">More info on this file can be found at the
+<a href="http://code.google.com/appengine/docs/java/config/appconfig.html">GAE homepage</a>. NOTE!
+This file is copied to the war directory by the RIA Suite scripts,
+overwriting the file there. The GAE plugin reads its data from the
+latter one. Changes made in <code>Project -> Properties -> Google -> App
+Engine -> Deployment</code> will therefore be overwritten by the RIA Suite
+scripts. See step 7 below.</div>
+
+</div>
+
+<div class="slide">
+<h2>Enabling Google App Engine plugin</h2>
+<ul>
+	<li>
+		Time to create a GAE WAR! Well, it's really just a war
+		directory, but anyway. (WAR files are not yet supported by the GAE
+		SDK.)
+		<pre>Run -> External Tools -> {project-name}-copy-to-GoogleApp</pre>
+		<div class="screen">(It's OK to choose the same directory as the
+		project root, which makes step 7 somewhat easier.)</div>
+	</li>
+	<li>
+To actually deploy the application to GAE, the GAE plugin for eclipse does the job for you.
+<div class="screen">
+(It's also possible to use the appcfg tool that ships with the GAE SDK.)
+The wits and bits are well documented at the GAE home page:
+
+http://code.google.com/appengine/docs/java/tools/eclipse.html
+</div>
+
+But first the plugin needs to be enabled for the project:
+<pre>
+Project -> Properties -> Google
+</pre>
+<ul>
+<li>In <code>App Engine</code>, <code>Use Google App Engine</code> needs to be checked.
+<div class="screen">(See note in step 5 regarding the entries under Deployment.)</div></li>
+<li>
+In <code>Web Application</code>, <code>This project has a war directory</code> needs to be checked, and properly configured.
+</li>
+</ul>
+	</li>
+</ul>
+</div>
+
+<div class="slide">
+<h2>Using the Google App Engine plugin</h2>
+After this is done, one can run the application using the GAE plugin, or uplaod it to the GAE website:
+ <ul>
+ <li>Select
+ <pre><code>Run -> Run As -> Web Application</code></pre> 
+ to deploy the application in a local jetty instance. The application can
+ then be viewed in a browser.
+ </li>
+ <li>Right clicking on the project, and then selecting
+ <pre><code>Google -> Deploy to App Engine</code></pre>
+will upload the application to the GAE website.
+ </li>
+ </ul>
+ 
+Et, voilà! The application is hosted at GAE.
+<div class="screen">
+Ok, we did run into a small problem in step 8. Build 5989 wants to deploy 
+xulrunner-mac-client.jar, which is to big to be deployed at GAE. Unfortunately the proposed --enable_jar_splitting didn't 
+do the trick. However, in our case, the file could safely be deleted from the war and war/WEB-INF/lib directories, 
+since our application didn't depend on it.
+</div>	
+</div>
+
+<div id="logo-left">
+	<a href="http://www.canoo.com">
+		<img src="pics/ria-suite.jpg" alt="RIA Suite" />
+	</a>
+</div>
+
+<div id="logo">
+	<a href="http://www.canoo.com">
+		<img src="pics/canoo-logo.png" alt="Canoo logo" />
+	</a>
+</div>
+</body>
+</html>
