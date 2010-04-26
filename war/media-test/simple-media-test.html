@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="media-test.css" />
+<title>CSS Media &amp; Page test</title>
+</head>
+<body>
+
+<div id="main-title">
+	<h1>CSS <code>@media</code> test</h1>
+</div>
+
+<div class="slide">
+<div class="intro">
+This is a web page to test the <code>@media</code> CSS rule.
+</div>
+</div>
+
+<div class="slide">
+<h2>Introduction (Slide 1)</h2>
+The <code>@media</code> rule can be used in CSS to change the layout of web pages
+when displayed on different media, such as printers, TVs, braille and audio devices.
+This web page uses the <code>@media</code> rule to change the layout for presentation, or projection, mode.
+</div>
+
+<div class="slide">
+<h2>Company logo (Slide 2)</h2>
+<div class="screen">
+We want to display the main header, and the logo at the bottom, 
+on ever slide.
+</div>
+<div class="projection">
+With some CSS tricks, we've displayed the main header
+and the logo on every slide.
+</div>
+</div>
+
+<div class="slide">
+<h2>Switching content (Slide 3)</h2>
+<div class="screen">
+You can have diffenrent content on screen, and in the presentation.
+</div>
+<div class="projection">
+By having two class, say <code>screen</code> and <code>projection</code>,
+you can easily turn on or off content in the different modes with
+<code>display: block</code> or <code>display: none</code>, respectively.
+</div>
+</div>
+
+<div class="slide screen">
+<h2>Switch to projection mode (Only on screen)</h2>
+Switch to full screen, or presentation/projection, mode in your browser.
+In Opera this is done be pressing <kbd>F11</kbd>.
+<p>This text should not be visible when in presentation mode.</p>
+</div>
+
+<div class="slide projection">
+<h2>Leave projection mode (Slide 4)</h2>
+This is the last page of the presentation. You can now leave presentation mode.
+In Opera this is done by pressing <kbd>F11</kbd> or <kbd>ESC</kbd>.
+<p>And this text is only for presentation mode.</p>
+</div>
+
+<div id="logo">
+  <img alt="Company logo" src="company-logo.png"/>
+</div>
+
+</body>
+</html>

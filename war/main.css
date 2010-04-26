@@ -1,0 +1,61 @@
+@CHARSET "UTF-8";
+
+/* Set up HTML 5 tags. */
+header,section,footer,aside,nav,article,figure {
+	display: block;
+}
+
+body {
+	padding: 0 20%;
+}
+
+header {
+	color: #6666dd;
+	background: #ff8844;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+section.first {
+	padding: 0 10px;
+}
+
+nav {
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	list-style: none;
+}
+
+nav ul li {
+	margin: .5%;
+	padding: 5px;
+	width: 48.9%;
+	float: left;
+	background: #eeeeee;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+nav ul li:hover {
+	background: #dddddd;
+}
+
+nav ul li a {
+	color: #6666dd;
+	text-decoration: none;
+	display: block;
+}
+
+h1 {
+	text-align: center;
+}
+
+h1,h2 {
+	padding: 5px 10px;
+}
